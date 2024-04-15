@@ -1,0 +1,11 @@
+# Tests
+**/*.pytest_cache/
+**/*__pycache__/
+
+# Logs
+**/*.log
+
+# Environments
+.env
+.venv
+venv/

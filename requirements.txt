@@ -1,0 +1,11 @@
+# Production
+Flask
+python-dotenv
+Flask-SocketIO
+google-generativeai
+pypandoc
+PyMuPDF
+
+# Testing
+pytest
+python-socketio
