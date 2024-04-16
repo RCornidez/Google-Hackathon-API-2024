@@ -3,7 +3,8 @@ Flask
 python-dotenv
 Flask-SocketIO
 google-generativeai
-pypandoc
+markdown2
+WeasyPrint
 PyMuPDF
 
 # Testing

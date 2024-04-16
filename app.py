@@ -1,12 +1,14 @@
 from flask import Flask
 from flask_socketio import SocketIO
-from components import endpoints
-from services.logger import logger
 import os
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# Load items dependent on dotenv
+from components import endpoints
+from services.logger import logger
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -21,4 +23,4 @@ if __name__ == '__main__':
     logger.info("Starting Flask API server")
     ip_address = os.getenv('IP_ADDRESS')
     port = int(os.getenv('PORT'))
-    socketio.run(app, host=ip_address, port=port)
+    socketio.run(app, host=ip_address, port=port, debug=True)

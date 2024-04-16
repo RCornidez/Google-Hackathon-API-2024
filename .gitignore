@@ -1,6 +1,8 @@
 # Tests
 **/*.pytest_cache/
 **/*__pycache__/
+temp/*
+tests/test_downloads/*
 
 # Logs
 **/*.log
