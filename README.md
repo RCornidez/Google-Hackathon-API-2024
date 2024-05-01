@@ -1,8 +1,8 @@
 # Trees Bees & Seas Flask API
 
-See our submission on DevPost =>
+See our submission on DevPost => https://devpost.com/software/trees-bees-and-seas
 
-See our presentation on YouTube =>
+See our presentation on YouTube => https://www.youtube.com/watch?v=TmlGwUXieh4
 
 See the Flutter application that uses this API => https://github.com/RCornidez/Google-Hackathon-2024
 
