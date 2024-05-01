@@ -5,6 +5,8 @@ import json
 from services.logger import logger
 import markdown2
 from weasyprint import HTML
+import base64
+from flask import Flask, jsonify, send_file
 
 class PDFService:
     def __init__(self, upload_method):
@@ -43,7 +45,6 @@ class PDFService:
                         image_count += 1
                     except Exception as e:
                         logger.error(f"Failed to upload image {img_name}: {e}")
-                        # Optionally re-raise if you need to propagate the error up
 
         logger.info(f"Completed parsing PDF: {pdf_path}")
         return content
@@ -80,8 +81,25 @@ class PDFService:
         HTML(string=rendered_html, base_url=os.path.dirname(template_path)).write_pdf(pdf_file, stylesheets=[css_path])
         logger.info(f"PDF creation successful for: {pdf_file}")
 
-    def get_file(self, file_name):
-        file_directory = '/temp'
+    def get_pdf_file(self, file_name):
+        file_directory = 'temp'
+        file_path = os.path.join(file_directory, file_name)
+
+        if not os.path.exists(file_path):
+            logger.error(f"File {file_name} not found")
+            return "File not found"
+
+        try:
+            with open(file_path, 'rb') as pdf_file:
+                pdf_data = pdf_file.read()
+                pdf_data_base64 = base64.b64encode(pdf_data).decode('utf-8')  # Convert to base64 string
+            return pdf_data_base64
+        except IOError as error:
+            logger.error(f"Failed to read file {file_name}: {error}")
+            return str(error)
+
+    def get_markdown_file(self, file_name):
+        file_directory = 'temp'
         file_path = os.path.join(file_directory, file_name)
 
         if not os.path.exists(file_path):
@@ -89,9 +107,10 @@ class PDFService:
             return None, "File not found"
 
         try:
-            with open(file_path, 'rb') as pdf_file:
-                pdf_data = pdf_file.read()
-            return pdf_data, None
+            with open(file_path, 'r') as markdown_file:
+                markdown_data = json.load(markdown_file)
+
+            return markdown_data
         except IOError as error:
             logger.error(f"Failed to read file {file_name}: {error}")
             return None, str(error)

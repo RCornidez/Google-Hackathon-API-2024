@@ -10,7 +10,7 @@ def setup_logger(name='Logger', level=logging.INFO, log_file='app.log'):
 
     # Determine the output handler based on the FLASK_ENV environment variable
     if os.getenv('VERBOSE') == 'false':
-        handler = logging.FileHandler(log_file)  # Log to file in production
+        handler = logging.FileHandler(log_file)  # Log to app.log in production
     else:
         handler = logging.StreamHandler()  # Log to console in non-production environments
 

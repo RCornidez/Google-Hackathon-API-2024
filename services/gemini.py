@@ -1,6 +1,5 @@
 import google.generativeai as genai
 import os
-import json
 from services.logger import logger
 
 class GeminiService:
@@ -49,17 +48,19 @@ class GeminiService:
     def generate_content(self, content):
         try:
             prompt = (
-                "I need you to be an environment and financial professional advisor. "
-                "Can you review the text that follows? Analyze what it's about and assess each of the images. "
-                "Based on the text (with insight of the images) determine specific short/long term negative impacts "
-                "to the environment. Provide meaningful green solutions, and determine the specific short and long term "
-                "benefits of those solutions. I need the response to be in Markdown form."
+                "As an AI serving a platform that offers environmental consulting, you are tasked with analyzing a customer-uploaded PDF concerning home building or similar subjects. "
+                "While the document may not explicitly mention environmental concerns, your role is to scrutinize any aspects of the plans or practices described that could potentially impact the environment, either directly or indirectly. "
+                "Identify potential short-term and long-term environmental impacts that might not be immediately obvious, drawing on subtle clues and implications within the text and images. "
+                "Propose specific, innovative improvements to make these plans more sustainable and environmentally friendly. "
+                "Where relevant, suggest modifications that could also lead to cost savings, enhancing the economic appeal of these green solutions. "
+                "Detail the benefits of these improvements, focusing on both environmental sustainability and potential financial savings. "
+                "Your analysis should be detailed, structured, and formatted in Markdown to aid clarity and decision-making. Include headings to organize the sections on themes, impacts, solutions, and benefits effectively."
             )
             combined_text = f"{prompt}\nReport Content:\n{content}"
             model_name = "gemini-pro"
             model = genai.GenerativeModel(model_name=model_name)
             response = model.generate_content(combined_text)
-            response_text = response.text  # assuming response object has a 'text' attribute
+            response_text = response.text
             
             byte_size = len(response_text.encode('utf-8'))
             logger.info(f"Generated content of {byte_size} bytes successfully.")
